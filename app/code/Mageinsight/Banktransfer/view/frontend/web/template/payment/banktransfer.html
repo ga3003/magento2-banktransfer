@@ -1,0 +1,79 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+ -->
+ <div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}">
+    <div class="payment-method-title field choice">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()" />
+        <label data-bind="attr: {'for': getCode()}" class="label"><span data-bind="text: getTitle()"></span></label>
+    </div>
+
+    <div class="payment-method-content">
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <div class="payment-method-billing-address">
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <form id="banktransfer-form" class="form form-banktransfer-order" data-role="banktransfer-form">
+            <fieldset class="fieldset payment method" data-bind='attr: {id: "payment_form_" + getCode()}'>
+                <div class="field required col-md-12 col-sm-12 col-xs-12">
+                    <label for="account_holder" class="label">
+                        <span><!-- ko i18n: 'Account Holder'--><!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" id="account_holder" name="payment[account_holder]" data-validate="{required:true}" class="input-text"
+                                data-bind='attr: {title: $t("Account Holder")}, value: account_holder' />
+                    </div>
+                </div>
+                <div class="field required col-md-6 col-sm-6 col-xs-12">
+                    <label for="iban_number" class="label">
+                        <span><!-- ko i18n: 'IBAN'--><!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" id="iban_number" name="payment[iban_number]" data-validate="{required:true}" class="input-text"
+                                data-bind='attr: {title: $t("IBAN Number")}, value: iban_number' />
+                    </div>
+                </div>
+                <div class="field required col-md-6 col-sm-6 col-xs-12">
+                    <label for="bic" class="label">
+                        <span><!-- ko i18n: 'BIC'--><!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" id="bic" name="payment[bic]" data-validate="{required:true}" class="input-text"
+                                data-bind='attr: {title: $t("BIC")}, value: bic' />
+                    </div>
+                </div>
+                <div class="checkout-agreements-block">
+                    <!-- ko foreach: $parent.getRegion('before-place-order') -->
+                        <!-- ko template: getTemplate() --><!-- /ko -->
+                    <!--/ko-->
+                </div>
+            </fieldset>
+            <p data-bind="html: getInstructions()"></p>
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button class="action primary checkout"
+                            type="submit"
+                            data-bind="
+                            click: placeOrder,
+                            attr: {'title': $t('Place Order')},
+                            enable: (getCode() == isChecked()),
+                            css: {disabled: !isPlaceOrderActionAllowed()}
+                            "
+                            disabled
+                            data-role="review-save">
+                        <span data-bind="i18n: 'Place Order'"></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

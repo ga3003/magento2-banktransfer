@@ -1,0 +1,28 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+$paymentTitle = $block->getMethod()->getConfigData('title', $block->getInfo()->getOrder()->getStoreId());
+$customerBankDetial = $block->getInfo()->getAdditionalInformation();
+?>
+
+<div class="order-payment-method-name"><?= $block->escapeHtml($paymentTitle) ?></div>
+<table class="data-table admin__table-secondary">
+    <tr>
+        <th><?= $block->escapeHtml(__('Account Holder')) ?>:</th>
+        <td><?= $block->escapeHtml($customerBankDetial['account_holder']) ?></td>
+    </tr>
+    <tr>
+        <th><?= $block->escapeHtml(__('IBAN Number')) ?>:</th>
+        <td><?= $block->escapeHtml($customerBankDetial['iban_number']) ?></td>
+    </tr>
+    <tr>
+        <th><?= $block->escapeHtml(__('BIC')) ?>:</th>
+        <td><?= $block->escapeHtml($customerBankDetial['bic']) ?></td>
+    </tr>
+    <tr>
+        <th><?= $block->escapeHtml(__('Instruction')) ?>:</th>
+        <td><?= $block->escapeHtml($customerBankDetial['instructions']) ?></td>
+    </tr>
+</table>
